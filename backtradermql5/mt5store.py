@@ -69,13 +69,13 @@ class MTraderAPI:
         try:
             self.sys_socket = context.socket(zmq.REQ)
             # set port timeout
-            self.sys_socket.RCVTIMEO = sys_timeout * 1000
+            self.sys_socket.RCVTIMEO = sys_timeout * 100000
             self.sys_socket.connect(
                 'tcp://{}:{}'.format(self.HOST, self.SYS_PORT))
 
             self.data_socket = context.socket(zmq.PULL)
             # set port timeout
-            self.data_socket.RCVTIMEO = data_timeout * 1000
+            self.data_socket.RCVTIMEO = data_timeout * 100000
             self.data_socket.connect(
                 'tcp://{}:{}'.format(self.HOST, self.DATA_PORT))
         except zmq.ZMQError:
@@ -454,7 +454,7 @@ class MTraderStore(with_metaclass(MetaSingleton, object)):
                 print(o)
 
             if o['error']:
-                self.put_notification(o['desription'])
+                self.put_notification(o['description'])
                 self.broker._reject(oref)
                 return
             else:
@@ -584,7 +584,7 @@ class MTraderStore(with_metaclass(MetaSingleton, object)):
             self.put_notification(ret_val["description"])
         else:
             print(
-                f'Request to write CVS data for symbol {tf} and timeframe {tf} succeeded. Check MT5 EA logging for the exact output location ...')
+                'Request to write CVS data for symbol {tf} and timeframe {tf} succeeded. Check MT5 EA logging for the exact output location ...')
 
         # TODO live updates
         # self.streaming_events()

@@ -118,9 +118,15 @@ class MTraderBroker(with_metaclass(MetaMTraderBroker, BrokerBase)):
         self.cash = cash = self.o.get_cash()
         return cash
 
+    def get_cash(self):
+        return self.getcash()
+
     def getvalue(self, datas=None):
         self.value = self.o.get_value()
         return self.value
+
+    def get_value(self):
+        return self.getvalue()
 
     def getposition(self, data, clone=True):
         # return self.o.getposition(data._dataname, clone=clone)
